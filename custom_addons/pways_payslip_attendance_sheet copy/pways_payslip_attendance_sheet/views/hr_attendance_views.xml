@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ -->
+<odoo>
+    <record id="view_dev_emp_hr_payslip_attendance_form" model="ir.ui.view">
+        <field name="name">view.dev.emp.hr.payslip.attendance.form</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="pways_hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//field[@name='contract_id']" position="after">
+                <field name="summary_id" invisible="0"/>
+            </xpath>
+            <xpath expr="//sheet//div[@name='button_box']" position="inside">
+                <button name="view_attendance_summary" class="oe_stat_button" icon="fa-calendar" 
+                        attrs="{'invisible':[('summary_id','=',False)]}" type="object">
+                    Attendances
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_dev_hr_attendance_rest_day_form" model="ir.ui.view">
+        <field name="name">view.dev.hr.attendance.rest.day.form</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='check_out']" position="after">
+                <field name="rest_day"/>
+            </xpath>
+        </field>
+    </record>
+    
+    <record id="view_dev_hr_attendance_rest_day_tree" model="ir.ui.view">
+        <field name="name">view.dev.hr.attendance.rest.day.tree</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='check_out']" position="after">
+                <field name="rest_day"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="res_config_dev_summary_settings_view_form" model="ir.ui.view">
+        <field name="name">dev.res.config.settings.view.form.inherit.hr</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="70"/>
+        <field name="inherit_id" ref="hr.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-key='hr']" position="inside">
+                <h2>Overtime Schedule</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <label for="overtime_schedule"/>
+                            <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." groups="base.group_multi_company"/>
+                            <div class="content-group">
+                                <div class="mt16">
+                                    <field name="overtime_schedule"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_dev_res_resource_calendar_form" model="ir.ui.view">
+        <field name="name">view.dev.res.resource.calendar.form</field>
+        <field name="model">resource.calendar</field>
+        <field name="inherit_id" ref="resource.resource_calendar_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//h1" position="after">
+                <group string="Overtime Rate">
+                    <group>
+                        <field name="normal_day_overtime" string='Normal Day'/>
+                        <field name="off_day_overtime" string='Week Off Day'/>
+                    </group>
+                    <group>
+                        <field name="holiday_overtime" string="Pub. Holiday"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+    
+    <record id="view_dev_resource_calendar_attendance_tree" model="ir.ui.view">
+        <field name="name">view.dev.resource.calendar.attendance.form</field>
+        <field name="model">resource.calendar.attendance</field>
+        <field name="inherit_id" ref="resource.view_resource_calendar_attendance_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='hour_to']" position="after">
+                <field name="break_hour"/>
+            </xpath>
+        </field>
+    </record>
+    
+    <record id="view_dev_emp_hr_contract_hourly_form" model="ir.ui.view">
+        <field name="name">view.dev.emp.hr.contract.hourly.form</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook//page[@name='information']//group[@name='salary_info']//group[@name='salary']" position="replace">
+                <group name="salary_and_advantages" string="Monthly Advantages in Cash">
+                    <field name="wage_by"/>
+                    <!--fixed-->
+                    <label for="wage" attrs="{'invisible': ['|', ('wage_by', '!=', 'fixed'), ('wage_by', '=', False)]}"/>
+                    <div class="o_row" name="wage" attrs="{'invisible': ['|', ('wage_by', '!=', 'fixed'), ('wage_by', '=', False)]}">
+                        <field name="wage" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                    <!--by  hours-->
+                    <label for="wage_by_hours" attrs="{'invisible': ['|', ('wage_by', '!=', 'by_hours'), ('wage_by', '=', False)]}"/>
+                    <div class="o_row" name="wage_by_hours" attrs="{'invisible': ['|', ('wage_by', '!=', 'by_hours'), ('wage_by', '=', False)]}">
+                        <field name="wage_by_hours" nolabel="1" attrs="{'required': [('wage_by', '=', 'by_hours')]}"/>
+                        <span> / hour</span>
+                    </div>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="work_entry_type_overtime_holiday_hours" model="hr.work.entry.type">
+            <!-- OVER_TIME_HOLIDAY -->
+            <!-- OVERTIME_SPECIAL_HOLIDAY -->
+            <field name="name">Overtime Public Holiday Hours</field>
+            <field name="code">OVERTIME_PUB_HOLIDAY</field>
+            <field name="sequence">1</field>
+        </record>
+        
+        <record id="work_entry_type_overtime_weekoff_hours" model="hr.work.entry.type">
+            <field name="name">Overtime Weekoff Hours</field>
+            <field name="code">OVER_TIME_WEEKOFF</field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="work_entry_type_overtime_holiday_day" model="hr.work.entry.type">
+            <!-- OVER_TIME_HOLIDAY_DAY -->
+            <field name="name">Total Public Holiday</field>
+            <field name="code">TOTAL_PUB_HOLIDAY</field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="work_entry_type_overtime_leave" model="hr.work.entry.type">
+            <field name="name">LEAVE</field>
+            <field name="code">LEAVE</field>
+            <field name="sequence">1</field>
+        </record>
+        <!-- LEAVE -->
+
+        <!-- structure -->
+        
+        <record id="structure_002" model="hr.payroll.structure">
+            <field name="name">Regular Pay</field>
+            <field name="code">Regular</field>
+            <field name="extended_workdays">1</field>
+            <field name="fix_month_salary">0</field>
+        </record>
+        <record id="structure_003" model="hr.payroll.structure">
+            <field name="name">Fixed Pay</field>
+            <field name="code">Fixed</field>
+            <field name="fix_month_salary">1</field>
+            <field name="extended_workdays">0</field>
+        </record>
+       <!--  <record id="structure_004" model="hr.payroll.structure">
+            <field name="name">Normal Pay</field>
+            <field name="code">Normal</field>
+            <field name="extended_workdays">0</field>
+            <field name="fix_month_salary">0</field>
+        </record> -->
+
+        <!-- Rule -->
+        <record id="dev_hr_rule_overtime" model="hr.salary.rule">
+            <field name="name">Overtime Salary</field>
+            <field name="code">OVER_TIME</field>
+            <field name="sequence" eval="5"/>
+            <field name="appears_on_payslip" eval="1"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="active" eval="1" />
+            <field name="category_id" ref="pways_hr_payroll.ALW"/>
+            <field name="amount_python_compute">result = worked_days.OVER_TIME and worked_days.OVER_TIME.amount</field>
+        </record>
+
+        <record id="dev_hr_rule_overtime_pub_holiday" model="hr.salary.rule">
+            <field name="name">Overtime Public Holiday Salary</field>
+            <field name="code">OVERTIME_PUB_HOLIDAY</field>
+            <field name="sequence" eval="6"/>
+            <field name="appears_on_payslip" eval="1"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="active" eval="1" />
+            <field name="category_id" ref="pways_hr_payroll.ALW"/>
+            <field name="amount_python_compute">result = worked_days.OVERTIME_PUB_HOLIDAY and worked_days.OVERTIME_PUB_HOLIDAY.amount</field>
+        </record>
+
+        <record id="dev_hr_rule_overtime_weekoff" model="hr.salary.rule">
+            <field name="name">Overtime Weekoff Hours Salary</field>
+            <field name="code">OVER_TIME_WEEKOFF</field>
+            <field name="sequence" eval="7"/>
+            <field name="appears_on_payslip" eval="1"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="active" eval="1" />
+            <field name="category_id" ref="pways_hr_payroll.ALW"/>
+            <field name="amount_python_compute">result = worked_days.OVER_TIME_WEEKOFF and worked_days.OVER_TIME_WEEKOFF.amount</field>
+        </record>
+
+        <!-- <record id="dev_hr_rule_holiday_overtime" model="hr.salary.rule">
+            <field name="name">HOLIDAY OVERTIME</field>
+            <field name="code">HOLIDAY_OVERTIME</field>
+            <field name="sequence" eval="8"/>
+            <field name="appears_on_payslip" eval="1"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="active" eval="1" />
+            <field name="category_id" ref="pways_hr_payroll.ALW"/>
+            <field name="amount_python_compute">result = worked_days.HOLIDAY_OVERTIME and worked_days.HOLIDAY_OVERTIME.amount</field>
+        </record> -->
+    </data>
+</odoo>

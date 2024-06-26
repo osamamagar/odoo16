@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_emp_attendance_summary_form" model="ir.ui.view">
+		<field name="name">view.emp.attendance.summary.form</field>
+		<field name="model">emp.attendance.summary</field>
+		<field name="arch" type="xml">
+			<form string="Attendance Summary">
+				<header>
+                    <button name="generate_summary" string="Compute Attendance"
+                            class="btn-primary" type="object" groups="base.group_user" states='draft'/>
+                    <button name="action_done" string="Locked"
+                            class="btn-primary" type="object" groups="base.group_user" states='draft'/>
+					<field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+				</header>
+				<sheet>
+                    <group>
+                        <group>
+                            <field name="from_date" attrs="{'readonly':[('state','=','done')]}"/>
+                            <field name="employee_id" attrs="{'readonly':[('state','=','done')]}"/>
+                            <field name="resource_calendar_id"/>
+                            <field name="month_work_days"/>
+                            <field name="month_total_attandance"/></group>
+                        <group>
+                            <field name="to_date" attrs="{'readonly':[('state','=','done')]}"/>
+                            <field name="contract_id" domain="[('employee_id','=',employee_id),('date_start','&lt;=',to_date),'|',('date_end','&gt;=',from_date),('date_end','=',False)]" context="{'default_employee_id': employee_id}"/>
+                            <field name="struct_id"/>
+                            <field name="company_id" invisible="1" attrs="{'readonly':[('state','=','done')]}"/>
+                            <field name="month_work_hour"/>
+                        </group>
+                    </group>
+                    <!-- <group string='Monthly Summary'>
+                        <group>
+                            <field name="month_work_days"/>
+                            <field name="month_total_attandance"/>
+                        </group>
+                        <group>
+                            <field name="month_work_hour"/>
+                        </group>
+                    </group> -->
+                    <group >
+                        <group string='Work Summary'>
+                             <field name="working_hour" widget="float_time"/>
+                             <field name="overtime_hour" widget="float_time"/>
+                             <field name="total_work_hour" widget="float_time"/>
+                        </group>
+                        <group string='Overtime Summary'>
+                            <field name="normal_ot" widget="float_time"/>
+                            <field name="week_off_ot" widget="float_time"/>
+                            <field name="pub_holiday_ot" widget="float_time"/>
+                            <field name="overtime_salary" invisible="0"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Attendance Summary">
+                        	<field name="summary_line_ids">
+                        		<tree editable="bottom" decoration-success="not in_time and not out_time and not is_holiday and not is_public_holiday" decoration-danger="is_holiday" >
+                                    <!-- is_holiday or is_public_holiday -->
+                        			<field name="date" readonly="1" force_save="1"/>
+                                    <field name="day" readonly="1" force_save="1"/>
+                                    <field name="resource_id" readonly="1" force_save="1" invisible="1"/>
+                                    <field name="work_hour" readonly="1" force_save="1" widget="float_time"/>
+                                    <field name="in_time" readonly="1" force_save="1" widget="float_time"/>
+                                    <field name="out_time" readonly="1" force_save="1" widget="float_time"/>
+                                    <field name="break_hour" readonly="1" force_save="1" widget="float_time"/>
+                                    <field name="working_hour" readonly="1" force_save="1" widget="float_time"/>
+                                    <field name="overtime" readonly="1" force_save="1" widget="float_time"/>
+                                    <field name="is_holiday" readonly="1" force_save="1"/>
+                                    <field name="overtime_salary" readonly="1" force_save="1" invisible="1"/>
+                                    <field name="is_public_holiday" readonly="1" force_save="1"/>
+                                    <field name="is_rest_day" invisible="1"/>
+                        		</tree>
+                        	</field>
+                        </page>
+                    </notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+    <record id="view_emp_attendance_summary_tree" model="ir.ui.view">
+        <field name="name">view.emp.attendance.summary.tree</field>
+        <field name="model">emp.attendance.summary</field>
+        <field name="arch" type="xml">
+            <tree string="Attendance Summary">
+                <field name="employee_id"/>
+                <field name="from_date"/>
+                <field name="to_date"/>
+                <field name="company_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="view_emp_attendance_summary_filter" model="ir.ui.view">
+        <field name="name">emp.attendance.summary.filter</field>
+        <field name="model">emp.attendance.summary</field>
+        <field name="arch" type="xml">
+            <search string="Attendance Summary">
+                <field name="employee_id"/>
+                <group expand="0" string="Group By">
+                    <filter string="Employees" name="employee_id" context="{'group_by':'employee_id'}"/>
+                    <filter string="Company" name="company_id" context="{'group_by':'company_id'}"/>
+                    <filter string="State" name="state" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="action_emp_attendance_summary">
+        <field name="name">Attendance Summary</field>
+        <field name="res_model">emp.attendance.summary</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            	Click to define a new Attendance Summary.
+          </p>
+        </field>
+    </record>
+    
+    <menuitem name="Attendance Summary" id="menu_emp_attendance_summary_main" parent="hr_attendance.menu_hr_attendance_root" sequence="10"/>
+    <menuitem name="Attendance Summary" id="menu_emp_attendance_summary_sub" parent="menu_emp_attendance_summary_main" action="action_emp_attendance_summary" sequence="1"/>
+
+</odoo>

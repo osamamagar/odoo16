@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="work_entry_type_work_hour" model="hr.work.entry.type">
+            <field name="name">WORK_HOUR</field>
+            <field name="code">WORK_HOUR</field>
+            <field name="sequence">1</field>
+        </record>
+        
+        <record id="work_entry_type_overtime_hours" model="hr.work.entry.type">
+            <field name="name">Overtime Hours</field>
+            <field name="code">OVER_TIME</field>
+            <field name="sequence">1</field>
+        </record>
+    </data>
+</odoo>

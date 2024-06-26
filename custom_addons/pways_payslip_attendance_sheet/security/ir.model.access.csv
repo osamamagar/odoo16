@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_emp_attendance_summary_employee,emp.attendance.summary.employee,model_emp_attendance_summary,base.group_user,1,0,0,0
+access_emp_attendance_summary_hr_officer,emp.attendance.summary.hr.officer,model_emp_attendance_summary,pways_hr_payroll.group_hr_payroll_user,1,1,1,1
+access_emp_attendance_summary_hr_manager,emp.attendance.summary.hr.manager,model_emp_attendance_summary,pways_hr_payroll.group_hr_payroll_manager,1,1,1,1
+
+access_emp_attendance_summary_att_manual,emp.attendance.summary.att.manual,model_emp_attendance_summary,hr_attendance.group_hr_attendance,1,0,0,0
+access_emp_attendance_summary_att_officer,emp.attendance.summary.att.officer,model_emp_attendance_summary,hr_attendance.group_hr_attendance_user,1,1,1,1
+access_emp_attendance_summary_att_manager,emp.attendance.summary.att.manager,model_emp_attendance_summary,hr_attendance.group_hr_attendance_manager,1,1,1,1
+access_emp_attendance_summary_line,emp.attendance.summary.line.all,model_emp_attendance_summary_line,,1,1,1,1
+
+

@@ -1,0 +1,23 @@
+{
+    "name": "Attendance Sheet Wise Payslip",
+    "version":"16.0.0",
+    "category": "Generic Modules/Human Resources",
+    'summary': 'Employee attendance sheet in payslip with basic or regular and fix monthly structuresPayroll and Overtime',
+    'description':"Employee attendance sheet in payslip with basic or regular and fix monthly structures. calculate diffrent types of overtimes and total working and leaves days",
+    'author': "Preciseways",
+    'website': "http://www.preciseways.com",
+    "depends": ['pways_hr_payroll_account','pways_payslip_attendance_sheet'],
+    "data": [
+        'security/ir.model.access.csv',
+        'data/hr_work_entry_type.xml',
+        'views/hr_payroll_structure_view.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+    'price':22.0,
+    'currency':'EUR',
+    "installable": True,
+    'images':['static/description/banner.png'],
+    'license': 'OPL-1',
+}

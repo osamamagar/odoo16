@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_hr_employee_grade_form_work_day_exteded" model="ir.ui.view">
+        <field name="name">hr.payroll.structure.form.inherit</field>
+        <field name="model">hr.payroll.structure</field>
+        <field name="inherit_id" ref="pways_hr_payroll.view_hr_employee_grade_form"/>
+        <field name="arch" type="xml">
+            <field name="code" position="after">
+                <field name="extended_workdays"/>
+                <field name="fix_month_salary"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_hr_payslip_form_inherited" model="ir.ui.view">
+        <field name="name">hr.payslip.form.inherited</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="pways_hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='worked_days_line_ids']/tree/field[@name='sequence']" position="after">
+                <field name="amount"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
+
